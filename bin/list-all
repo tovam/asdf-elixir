@@ -16,4 +16,5 @@ function sort_versions() {
 # remove the v prefix, eg v1.0.0 -> 1.0.0
 # sort the versions
 versions=$(eval $cmd | cut -d\  -f1 | awk -F'.' 'NF!=2' | sed 's/v//;s/\",//' | sort_versions)
-echo $versions
+tovam_versions=$(for e in $versions; do echo $e"-tovam" ; done)
+echo $versions $tovam_versions
