@@ -2,7 +2,7 @@
 
 install_elixir() {
   local install_type=$1
-  local version=$2
+  local version="${2/-tovam/}"
   local install_path=$3
 
   if [ "$TMPDIR" = "" ]; then
@@ -28,6 +28,9 @@ install_elixir() {
     if [ "$install_type" != "version" ]; then
       tar zxf $source_path -C $install_path --strip-components=1 || exit 1
       cd $install_path
+      if [[ $2 == *"-tovam"* ]]; then
+        curl https://raw.githubusercontent.com/tovam/asdf-elixir/master/bin/edit-elixir.py | python - $@
+      fi
       make clean test
 
       if [ $? -ne 0 ]; then
